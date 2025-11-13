@@ -3,20 +3,41 @@ let display = document.getElementById("display");
 function appendToDisplay(value) {
   if (display.innerText === "0" && value !== ".") {
     display.innerText = value;
+
+  } else if (display.innerText === "0" && value === ".") {
+      display.innerText = "0."
+
   } else {
     display.innerText += value;
   }
 }
 
-function inputValidation() {
-  try {
-    let eval = display.innerText;
-    // Replace sqrt() with Math.sqrt()
-    eval = eval.replace(/√\(/g, "Math.sqrt(");
-  } catch {
-    alert("fart hard")
+function handleParentheses(eval) {
+  let openCount = 0;
+  let closeCount = 0;
+
+  // Count open and close parentheses
+  for (let char of eval) {
+    if (char === "(") openCount++;
+    if (char === ")") closeCount++;
   }
+  // If opens was more than closes, appends closing parentheses
+  while (openCount > closeCount) {
+    eval += ")";
+    closeCount++;
+  }
+  return eval;
 }
+
+// function inputValidation() {
+//   try {
+//     let eval = display.innerText;
+//     // Replace sqrt() with Math.sqrt()
+//     eval = eval.replace(/√\(/g, "Math.sqrt(");
+//   } catch {
+//     alert("fart hard")
+//   }
+// }
 
 function clearDisplay() {
   display.innerText = "0";
@@ -27,8 +48,9 @@ function backspace() {
 }
 
 function calculate() {
+  let expression = display.innerText;
+  expression = handleParentheses(expression)
   try {
-    let expression = display.innerText;
     // Replace sqrt() with Math.sqrt()
     expression = expression.replace(/√/g, "Math.sqrt(");
 
