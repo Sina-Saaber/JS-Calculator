@@ -20,6 +20,11 @@ function backspace() {
   display.innerText = display.innerText.slice(0, -1) || "0";
 }
 
+function pi(eval_str){
+    // Replace "π" with "Math.PI"
+    return eval_str = eval_str.replace(/π/g, "Math.PI");
+}
+
 function factorial(numb) {
   if (isNaN(numb)) throw new Error("Invalid factorial");
   let result = 1;
@@ -49,6 +54,8 @@ function inputValidation(eval_str) {
     // Add "*" before or after prantheses that haven't any operators
     eval_str = eval_str.replace(/([\d.]+)\(/g, '$1*(');
     eval_str = eval_str.replace(/\)(?=[\d.])/g, ')*');
+    // Replace "π" with "Math.PI"
+    eval_str = pi(eval_str)
     // Replace "√" with "Math.sqrt(" in "eval_str"
     eval_str = eval_str.replace(/√/g, "Math.sqrt");
     // Add "*" before "√", handles cases like 2√16
