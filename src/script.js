@@ -20,6 +20,14 @@ function backspace() {
   display.innerText = display.innerText.slice(0, -1) || "0";
 }
 
+function factorial(numb) {
+  if (isNaN(numb)) throw new Error("Invalid factorial");
+  let result = 1;
+  for (let i=2; i <= numb; i++) 
+    result *= i;
+  return result;
+}
+
 function handleParentheses(eval_str) {
   let openCount = 0;
   let closeCount = 0;
@@ -42,11 +50,11 @@ function inputValidation(eval_str) {
     eval_str = eval_str.replace(/([\d.]+)\(/g, '$1*(');
     eval_str = eval_str.replace(/\)(?=[\d.])/g, ')*');
     // Replace "√" with "Math.sqrt(" in "eval_str"
-    eval_str = eval_str.replace(/√/g, "Math.sqrt(");
-    // Auto close the Parenthesis when finds an operator after "sqrt("
-    eval_str = eval_str.replace(/\.sqrt\(([^()+\-*/]+)([+\-*/])/g,".sqrt($1)$2");
+    eval_str = eval_str.replace(/√/g, "Math.sqrt");
     // Add "*" before "√", handles cases like 2√16
     eval_str = eval_str.replace(/([\d.]+)Math/g, '$1*Math.sqrt(');
+    // Replace factorial (simple integer case)
+    eval_str = eval_str.replace(/(\d+)!/g, 'factorial($1)');
     // Auto close prantheses
     eval_str = handleParentheses(eval_str);
 
