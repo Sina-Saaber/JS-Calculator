@@ -25,6 +25,7 @@ function factorial(numb) {
   let result = 1;
   for (let i=2; i <= numb; i++) 
     result *= i;
+
   return result;
 }
 
@@ -45,7 +46,6 @@ function handleParentheses(eval_str) {
 }
 
 function inputValidation(eval_str) {
-  try {
     // Replace "π" with "(3.142)"
     eval_str = eval_str.replace(/π/g, "(3.142)");
     // Replace "÷" with "/"
@@ -65,9 +65,7 @@ function inputValidation(eval_str) {
     eval_str = eval_str.replace(/([\d.]+)Math/g, '$1*Math');
     // Auto close prantheses
     eval_str = handleParentheses(eval_str);
-  } catch {
-     display.innerText = "Error";
-  }
+
   return eval_str
 }
 
@@ -91,29 +89,31 @@ function calculate() {
 
 // Connect specific keyboard buttons to the app
 document.addEventListener("keydown", (event) => {
-  const key = event.key;
-  if (
-    (key >= "0" && key <= "9") ||
-    key === "." ||
-    key === "+" ||
-    key === "-" ||
-    key === "*" ||
-    key === "/"
-  ) {
-    appendToDisplay(key);
+const key = event.key;
 
-  } else if (key === "Enter") {
+if (/[0-9.+\-*()]/.test(key)) {
+appendToDisplay(key);
+return; 
+}
+switch (key) {
+  case "/":
+    appendToDisplay("÷");
+    break;
+    
+  case "Enter":
     event.preventDefault();
     calculate();
+    break;
 
-  } else if (key === "Escape" || key === "Delete" || key === "c") {
+  case "Escape":
+  case "Delete":
+  case "c":
     clearDisplay();
+    break;
 
-  } else if (key === "(" || key === ")") {
-    appendToDisplay(key);
-
-  } else if (key === "Backspace") {
+  case "Backspace":
     event.preventDefault();
     backspace();
-  }
-});
+    break;
+}
+})
