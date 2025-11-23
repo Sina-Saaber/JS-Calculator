@@ -10,14 +10,17 @@ function appendToDisplay(value) {
   } else {
     display.innerText += value;
   }
+  playSFX(clickSFX);
 }
 
 function clearDisplay() {
   display.innerText = "0";
+  playSFX(removeSFX);
 }
 
 function backspace() {
   display.innerText = display.innerText.slice(0, -1) || "0";
+  playSFX(removeSFX);
 }
 
 function factorial(numb) {
@@ -83,8 +86,10 @@ function calculate() {
 
   } catch (error) {
     display.innerText = "Error";
+    playSFX(errorSFX);
     setTimeout(clearDisplay, 1500);
   }
+  playSFX(calculateSFX);
 }
 
 // Connect specific keyboard buttons to the app
@@ -118,3 +123,13 @@ switch (key) {
     break;
 }
 })
+// Import sound effects
+const clickSFX = new Audio("../public/sounds/ui/btn-click.wav");
+const calculateSFX = new Audio("../public/sounds/ui/btn-calculate.wav");
+const errorSFX = new Audio("../public/sounds/ui/error.wav");
+const removeSFX = new Audio("../public/sounds/ui/btn-remove.wav");
+
+function playSFX(SFX) {
+  SFX.currentTime = 0;
+  SFX.play();
+}
