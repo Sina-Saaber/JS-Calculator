@@ -1,4 +1,4 @@
-<h3 align="center">A simple web-based calculator, built with Vanilla JS<br>Made by my brother❤❤<br>
+<h3 align="center">A simple web-based calculator, built with Vanilla JS<br>🤍❤Made by my brother❤🤍<br>
     <a href="https://a-partovii.github.io/Web-Calculator/src/web-calculator.html">
         👉Check Online👈
     </a>
